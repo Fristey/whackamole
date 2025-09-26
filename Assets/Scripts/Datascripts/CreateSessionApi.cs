@@ -6,6 +6,7 @@ using System.Collections;
 
 public class CreateSessionApi : MonoBehaviour
 {
+
     [Serializable]
     private class CreateSessionRequest
     {

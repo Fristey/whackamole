@@ -6,6 +6,8 @@ using System.Collections;
 
 public class SubmitScoreApi : MonoBehaviour
 {
+    public static SubmitScoreApi Instance;
+
     [Serializable]
     private class SubmitScoreRequest
     {
@@ -26,6 +28,18 @@ public class SubmitScoreApi : MonoBehaviour
 
     private const string SubmitScoreUrl = "http://localhost:5173/api/submit-score";
 
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public IEnumerator SubmitScore(int sessionId, int levelId, int score, int timeTaken, float accuracy)
     {
         SubmitScoreRequest reqObj = new SubmitScoreRequest
@@ -86,10 +100,10 @@ public class SubmitScoreApi : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void GameOver()
     {
         int sessionId = 3;
         int levelId = 1;
-        StartCoroutine(SubmitScore(sessionId, levelId, 2552, 72, 64.2f));
+        StartCoroutine(SubmitScore(sessionId, levelId, GameManager.Instance.score, 72, 64.2f));
     }
 }
